@@ -130,5 +130,11 @@ namespace Bayview_Demo
             btnbook.Enabled = !setas;
         }
 
+        private void btncust_Click(object sender, EventArgs e)
+        {
+            //Display Form 2 when the "Customers" button is clicked
+            Form2 frm2 = new Form2();
+            frm2.ShowDialog();
+        }
     }
 }

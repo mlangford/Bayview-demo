@@ -125,6 +125,7 @@
             this.btncust.TabIndex = 25;
             this.btncust.Text = "Customers";
             this.btncust.UseVisualStyleBackColor = true;
+            this.btncust.Click += new System.EventHandler(this.btncust_Click);
             // 
             // btnnewpwd
             // 
