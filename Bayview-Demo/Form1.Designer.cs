@@ -101,6 +101,7 @@
             this.btnlogin.TabIndex = 27;
             this.btnlogin.Text = "Submit";
             this.btnlogin.UseVisualStyleBackColor = true;
+            this.btnlogin.Click += new System.EventHandler(this.btnlogin_Click);
             // 
             // btnbook
             // 
