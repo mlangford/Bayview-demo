@@ -52,6 +52,7 @@
             this.btncnl.Text = "Cancel";
             this.btncnl.UseVisualStyleBackColor = true;
             this.btncnl.Visible = false;
+            this.btncnl.Click += new System.EventHandler(this.btncnl_Click);
             // 
             // btnpwd
             // 
@@ -62,6 +63,7 @@
             this.btnpwd.Text = "Submit";
             this.btnpwd.UseVisualStyleBackColor = true;
             this.btnpwd.Visible = false;
+            this.btnpwd.Click += new System.EventHandler(this.btnpwd_Click);
             // 
             // tbreset1
             // 
@@ -92,6 +94,7 @@
             this.btnlogout.TabIndex = 29;
             this.btnlogout.Text = "Log Out";
             this.btnlogout.UseVisualStyleBackColor = true;
+            this.btnlogout.Click += new System.EventHandler(this.btnlogout_Click);
             // 
             // btnlogin
             // 
@@ -132,6 +135,7 @@
             this.btnnewpwd.TabIndex = 24;
             this.btnnewpwd.Text = "New\r\nPassword";
             this.btnnewpwd.UseVisualStyleBackColor = true;
+            this.btnnewpwd.Click += new System.EventHandler(this.btnnewpwd_Click);
             // 
             // tbpasswd
             // 
