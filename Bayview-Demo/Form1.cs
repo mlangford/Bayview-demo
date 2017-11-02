@@ -49,7 +49,7 @@ namespace Bayview_Demo
             catch
             {
                 //if something went wrong, show details
-                MessageBox.Show("Login unsuccessful");
+                showlabel("Login unsuccessful - try again", 4000);
                 tbusername.Focus();
             }
             finally
@@ -122,12 +122,12 @@ namespace Bayview_Demo
                         dbcon.Close();
                     }
                 }
-                MessageBox.Show("Password reset");
+                showlabel("Password was reset", 4000);
                 setpwdchng(false);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                showlabel(ex.Message, 4000);
                 tbreset0.Clear();
                 tbreset1.Clear();
                 tbreset2.Clear();
@@ -172,6 +172,30 @@ namespace Bayview_Demo
             //Display Form 2 when the "Customers" button is clicked
             Form2 frm2 = new Form2();
             frm2.ShowDialog();
+        }
+
+        private void tbpasswd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                btnlogin_Click(null, null);
+            }
+        }
+
+        //display a feedback label
+        private void showlabel(string detail, int time)
+        {
+            lbFeedback.Text = detail;
+            lbFeedback.Visible = true;
+            timer1.Interval = time;
+            timer1.Start();
+        }
+        //hide feedback label after n seconds
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lbFeedback.Visible = false;
+            timer1.Stop();
         }
 
     }

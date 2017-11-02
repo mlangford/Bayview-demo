@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btncnl = new System.Windows.Forms.Button();
             this.btnpwd = new System.Windows.Forms.Button();
             this.tbreset1 = new System.Windows.Forms.TextBox();
@@ -45,6 +46,8 @@
             this.lboldpwd = new System.Windows.Forms.Label();
             this.tbreset2 = new System.Windows.Forms.TextBox();
             this.lblnewpwd2 = new System.Windows.Forms.Label();
+            this.lbFeedback = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btncnl
@@ -150,6 +153,7 @@
             this.tbpasswd.PasswordChar = '#';
             this.tbpasswd.Size = new System.Drawing.Size(312, 34);
             this.tbpasswd.TabIndex = 1;
+            this.tbpasswd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbpasswd_KeyPress);
             // 
             // label2
             // 
@@ -221,12 +225,29 @@
             this.lblnewpwd2.Text = "Repeat new";
             this.lblnewpwd2.Visible = false;
             // 
+            // lbFeedback
+            // 
+            this.lbFeedback.AutoSize = true;
+            this.lbFeedback.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbFeedback.ForeColor = System.Drawing.Color.Maroon;
+            this.lbFeedback.Location = new System.Drawing.Point(227, 149);
+            this.lbFeedback.Name = "lbFeedback";
+            this.lbFeedback.Size = new System.Drawing.Size(114, 25);
+            this.lbFeedback.TabIndex = 37;
+            this.lbFeedback.Text = "lbFeedback";
+            this.lbFeedback.Visible = false;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MistyRose;
             this.ClientSize = new System.Drawing.Size(786, 459);
+            this.Controls.Add(this.lbFeedback);
             this.Controls.Add(this.tbreset2);
             this.Controls.Add(this.lblnewpwd2);
             this.Controls.Add(this.tbreset0);
@@ -274,6 +295,8 @@
         private System.Windows.Forms.Label lboldpwd;
         private System.Windows.Forms.TextBox tbreset2;
         private System.Windows.Forms.Label lblnewpwd2;
+        private System.Windows.Forms.Label lbFeedback;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
