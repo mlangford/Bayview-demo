@@ -41,6 +41,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbusername = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tbreset0 = new System.Windows.Forms.TextBox();
+            this.lboldpwd = new System.Windows.Forms.Label();
+            this.tbreset2 = new System.Windows.Forms.TextBox();
+            this.lblnewpwd2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btncnl
@@ -48,7 +52,7 @@
             this.btncnl.Location = new System.Drawing.Point(388, 344);
             this.btncnl.Name = "btncnl";
             this.btncnl.Size = new System.Drawing.Size(75, 28);
-            this.btncnl.TabIndex = 33;
+            this.btncnl.TabIndex = 8;
             this.btncnl.Text = "Cancel";
             this.btncnl.UseVisualStyleBackColor = true;
             this.btncnl.Visible = false;
@@ -59,7 +63,7 @@
             this.btnpwd.Location = new System.Drawing.Point(469, 344);
             this.btnpwd.Name = "btnpwd";
             this.btnpwd.Size = new System.Drawing.Size(75, 28);
-            this.btnpwd.TabIndex = 32;
+            this.btnpwd.TabIndex = 7;
             this.btnpwd.Text = "Submit";
             this.btnpwd.UseVisualStyleBackColor = true;
             this.btnpwd.Visible = false;
@@ -68,17 +72,18 @@
             // tbreset1
             // 
             this.tbreset1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbreset1.Location = new System.Drawing.Point(232, 291);
+            this.tbreset1.Location = new System.Drawing.Point(232, 245);
             this.tbreset1.Name = "tbreset1";
+            this.tbreset1.PasswordChar = '#';
             this.tbreset1.Size = new System.Drawing.Size(312, 34);
-            this.tbreset1.TabIndex = 31;
+            this.tbreset1.TabIndex = 5;
             this.tbreset1.Visible = false;
             // 
             // lbnewpwd1
             // 
             this.lbnewpwd1.AutoSize = true;
             this.lbnewpwd1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbnewpwd1.Location = new System.Drawing.Point(59, 291);
+            this.lbnewpwd1.Location = new System.Drawing.Point(59, 245);
             this.lbnewpwd1.Name = "lbnewpwd1";
             this.lbnewpwd1.Size = new System.Drawing.Size(140, 25);
             this.lbnewpwd1.TabIndex = 30;
@@ -91,7 +96,7 @@
             this.btnlogout.Location = new System.Drawing.Point(651, 19);
             this.btnlogout.Name = "btnlogout";
             this.btnlogout.Size = new System.Drawing.Size(86, 42);
-            this.btnlogout.TabIndex = 29;
+            this.btnlogout.TabIndex = 3;
             this.btnlogout.Text = "Log Out";
             this.btnlogout.UseVisualStyleBackColor = true;
             this.btnlogout.Click += new System.EventHandler(this.btnlogout_Click);
@@ -101,7 +106,7 @@
             this.btnlogin.Location = new System.Drawing.Point(469, 118);
             this.btnlogin.Name = "btnlogin";
             this.btnlogin.Size = new System.Drawing.Size(75, 28);
-            this.btnlogin.TabIndex = 27;
+            this.btnlogin.TabIndex = 2;
             this.btnlogin.Text = "Submit";
             this.btnlogin.UseVisualStyleBackColor = true;
             this.btnlogin.Click += new System.EventHandler(this.btnlogin_Click);
@@ -112,7 +117,7 @@
             this.btnbook.Location = new System.Drawing.Point(651, 118);
             this.btnbook.Name = "btnbook";
             this.btnbook.Size = new System.Drawing.Size(86, 71);
-            this.btnbook.TabIndex = 26;
+            this.btnbook.TabIndex = 11;
             this.btnbook.Text = "Bookings";
             this.btnbook.UseVisualStyleBackColor = true;
             // 
@@ -122,10 +127,9 @@
             this.btncust.Location = new System.Drawing.Point(651, 196);
             this.btncust.Name = "btncust";
             this.btncust.Size = new System.Drawing.Size(86, 71);
-            this.btncust.TabIndex = 25;
+            this.btncust.TabIndex = 10;
             this.btncust.Text = "Customers";
             this.btncust.UseVisualStyleBackColor = true;
-            this.btncust.Click += new System.EventHandler(this.btncust_Click);
             // 
             // btnnewpwd
             // 
@@ -133,7 +137,7 @@
             this.btnnewpwd.Location = new System.Drawing.Point(651, 325);
             this.btnnewpwd.Name = "btnnewpwd";
             this.btnnewpwd.Size = new System.Drawing.Size(86, 47);
-            this.btnnewpwd.TabIndex = 24;
+            this.btnnewpwd.TabIndex = 9;
             this.btnnewpwd.Text = "New\r\nPassword";
             this.btnnewpwd.UseVisualStyleBackColor = true;
             this.btnnewpwd.Click += new System.EventHandler(this.btnnewpwd_Click);
@@ -143,8 +147,9 @@
             this.tbpasswd.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbpasswd.Location = new System.Drawing.Point(232, 69);
             this.tbpasswd.Name = "tbpasswd";
+            this.tbpasswd.PasswordChar = '#';
             this.tbpasswd.Size = new System.Drawing.Size(312, 34);
-            this.tbpasswd.TabIndex = 23;
+            this.tbpasswd.TabIndex = 1;
             // 
             // label2
             // 
@@ -162,7 +167,7 @@
             this.tbusername.Location = new System.Drawing.Point(232, 19);
             this.tbusername.Name = "tbusername";
             this.tbusername.Size = new System.Drawing.Size(312, 34);
-            this.tbusername.TabIndex = 21;
+            this.tbusername.TabIndex = 0;
             // 
             // label1
             // 
@@ -174,12 +179,58 @@
             this.label1.TabIndex = 20;
             this.label1.Text = "Staff Username";
             // 
+            // tbreset0
+            // 
+            this.tbreset0.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbreset0.Location = new System.Drawing.Point(232, 196);
+            this.tbreset0.Name = "tbreset0";
+            this.tbreset0.PasswordChar = '#';
+            this.tbreset0.Size = new System.Drawing.Size(312, 34);
+            this.tbreset0.TabIndex = 4;
+            this.tbreset0.Visible = false;
+            // 
+            // lboldpwd
+            // 
+            this.lboldpwd.AutoSize = true;
+            this.lboldpwd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboldpwd.Location = new System.Drawing.Point(59, 196);
+            this.lboldpwd.Name = "lboldpwd";
+            this.lboldpwd.Size = new System.Drawing.Size(132, 25);
+            this.lboldpwd.TabIndex = 34;
+            this.lboldpwd.Text = "Old password";
+            this.lboldpwd.Visible = false;
+            // 
+            // tbreset2
+            // 
+            this.tbreset2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbreset2.Location = new System.Drawing.Point(232, 293);
+            this.tbreset2.Name = "tbreset2";
+            this.tbreset2.PasswordChar = '#';
+            this.tbreset2.Size = new System.Drawing.Size(312, 34);
+            this.tbreset2.TabIndex = 6;
+            this.tbreset2.Visible = false;
+            // 
+            // lblnewpwd2
+            // 
+            this.lblnewpwd2.AutoSize = true;
+            this.lblnewpwd2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblnewpwd2.Location = new System.Drawing.Point(59, 293);
+            this.lblnewpwd2.Name = "lblnewpwd2";
+            this.lblnewpwd2.Size = new System.Drawing.Size(115, 25);
+            this.lblnewpwd2.TabIndex = 36;
+            this.lblnewpwd2.Text = "Repeat new";
+            this.lblnewpwd2.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MistyRose;
             this.ClientSize = new System.Drawing.Size(786, 459);
+            this.Controls.Add(this.tbreset2);
+            this.Controls.Add(this.lblnewpwd2);
+            this.Controls.Add(this.tbreset0);
+            this.Controls.Add(this.lboldpwd);
             this.Controls.Add(this.btncnl);
             this.Controls.Add(this.btnpwd);
             this.Controls.Add(this.tbreset1);
@@ -219,6 +270,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbusername;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbreset0;
+        private System.Windows.Forms.Label lboldpwd;
+        private System.Windows.Forms.TextBox tbreset2;
+        private System.Windows.Forms.Label lblnewpwd2;
     }
 }
 

@@ -78,19 +78,47 @@ namespace Bayview_Demo
         private void btnpwd_Click(object sender, EventArgs e)
         {
             //coding actions to reset the logged-in user's password
+            SQLiteDataReader dr;
+            string sql;
             try
             {
+                //if new passwords don't match (case sensitive), throw an exception
+                if (string.Compare(tbreset1.Text, tbreset2.Text, false) == -1)
+                    throw new Exception(" New passwords don't match");
+
+                //retrieve old password from db
+                string dbpwd;
+                using (SQLiteConnection dbcon = new SQLiteConnection())
+                {
+                    dbcon.ConnectionString = dbConnection.source;
+                    sql = "SELECT passwd FROM staff WHERE staffID=@id";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
+                    {
+                        cmd.Parameters.AddWithValue("id", stfid);
+                        dbcon.Open();
+                        using (dr = cmd.ExecuteReader())
+                        {
+                            dr.Read();
+                            dbpwd = dr[0].ToString();
+                        }
+                        dbcon.Close();
+                    }
+                    //if entered password is incorrect, throw an exception
+                    if (tbreset0.Text != dbpwd)
+                        throw new Exception("Old password is incorrect");
+                }
+
                 //write the newly supplied password out to the db
                 using (SQLiteConnection dbcon = new SQLiteConnection())
                 {
                     dbcon.ConnectionString = dbConnection.source;
-                    string sql = "UPDATE staff SET passwd=@pw WHERE staffID=@id";
+                    sql = "UPDATE staff SET passwd=@pw WHERE staffID=@id";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
                     {
                         cmd.Parameters.AddWithValue("pw", tbreset1.Text);
                         cmd.Parameters.AddWithValue("id", stfid);
                         dbcon.Open();
-                        cmd.ExecuteNonQuery();
+                            cmd.ExecuteNonQuery();
                         dbcon.Close();
                     }
                 }
@@ -100,7 +128,10 @@ namespace Bayview_Demo
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                tbreset0.Clear();
                 tbreset1.Clear();
+                tbreset2.Clear();
+                tbreset0.Focus();
             }
         }
 
@@ -119,9 +150,15 @@ namespace Bayview_Demo
         private void setpwdchng(Boolean setas)
         {
             //activate (setas=true), or deactivate (setas=false), the password change controls
+            lboldpwd.Visible = setas;
             lbnewpwd1.Visible = setas;
+            lblnewpwd2.Visible = setas;
+            tbreset0.Clear();
             tbreset1.Clear();
+            tbreset2.Clear();
+            tbreset0.Visible = setas;
             tbreset1.Visible = setas;
+            tbreset2.Visible = setas;
             btnpwd.Visible = setas;
             btncnl.Visible = setas;
             btnlogout.Enabled = !setas;
@@ -136,5 +173,6 @@ namespace Bayview_Demo
             Form2 frm2 = new Form2();
             frm2.ShowDialog();
         }
+
     }
 }
