@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.IO;
 using System.Data.SQLite;
 
 namespace Bayview_Demo
@@ -14,6 +15,85 @@ namespace Bayview_Demo
         //global variable used to keep track of
         //the currently logged-in staff member
         int stfid;
+        //global variable to hold db path/filename 
+        string db;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //try to get db details from LKG file
+            try
+            {
+                using (StreamReader sr = new StreamReader("lkg.txt"))
+                {
+                    db = sr.ReadLine();
+                }
+            }
+            catch (Exception)
+            {
+                //otherwise, get details from user
+                OpenFileDialog ofd = new OpenFileDialog
+                {
+                    Title = "Select SQLite database file",
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    Filter = "Database files (*.db)|*.db",
+                    FilterIndex = 1,
+                    FileName = ""
+                };
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    db = ofd.FileName;
+                }
+                else
+                {
+                    //as no db file was established; exit gracefully
+                    MessageBox.Show("Unable to continue without a database connection\n\rApplication will now close");
+                    Environment.Exit(0);
+                }
+            }
+            //if  named database file does not exist, the SQLiteconnection Class
+            //will create a new, empty, one when you connect. This checks the file
+            // exists before we connect; dont want to connect to a new empty one
+            if (!File.Exists(db))
+            {
+                //details in LKG not good, so delete, and advise to restart
+                MessageBox.Show("The 'Last Known Good' details were invalid\r\nRestart application and try again");
+                File.Delete("lkg.txt");
+                Environment.Exit(0);
+            }
+            //final test, try to read room table
+            try
+            {
+                using (SQLiteConnection dbcon = new SQLiteConnection())
+                {
+                    dbcon.ConnectionString = @"Data Source=" + db;
+                    string sql = "SELECT * FROM room";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
+                    {
+                        dbcon.Open();
+                        using (SQLiteDataReader dr = cmd.ExecuteReader())
+                        {
+                            //if no data, throw an exception
+                            if (!dr.HasRows)
+                                throw new Exception();
+                        }
+                        //connection fully validated
+                        dbcon.Close();
+                    }
+                }
+                //save Last Known Good details
+                using (StreamWriter sw = new StreamWriter("lkg.txt", false))
+                {
+                    sw.WriteLine(db);
+                }
+            }
+            catch (Exception ex)
+            {
+                //catch any remaining connection problems here
+                MessageBox.Show("Db connection failed\r\nApplication will close\r\n" + ex.Message);
+                Environment.Exit(0);
+            };
+
+        }
 
         private void btnlogin_Click(object sender, EventArgs e)
         {
@@ -204,5 +284,6 @@ namespace Bayview_Demo
             Form2 frm2 = new Form2();
             frm2.ShowDialog();
         }
+
     }
 }
