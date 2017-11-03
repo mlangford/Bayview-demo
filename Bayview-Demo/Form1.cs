@@ -34,9 +34,10 @@ namespace Bayview_Demo
                             //if no match to name in Db, throw an exception
                             if (!dr.HasRows)
                                 throw new Exception();
-                            //if paswords dont match, throw an exception
+                            //if pasword hash codes dont match, throw an exception
+                            string hsh = Coder.GetHash(tbpasswd.Text);
                             dr.Read();
-                            if (tbpasswd.Text != dr[0].ToString())
+                            if (hsh != dr[0].ToString())
                                 throw new Exception();
                             //OK, the login is valid
                             stfid = Convert.ToInt32(dr[1]);  //keep track of current staff member
@@ -87,7 +88,7 @@ namespace Bayview_Demo
                     throw new Exception(" New passwords don't match");
 
                 //retrieve old password from db
-                string dbpwd;
+                string dbhsh;
                 using (SQLiteConnection dbcon = new SQLiteConnection())
                 {
                     dbcon.ConnectionString = dbConnection.source;
@@ -99,12 +100,12 @@ namespace Bayview_Demo
                         using (dr = cmd.ExecuteReader())
                         {
                             dr.Read();
-                            dbpwd = dr[0].ToString();
+                            dbhsh = dr[0].ToString();
                         }
                         dbcon.Close();
                     }
                     //if entered password is incorrect, throw an exception
-                    if (tbreset0.Text != dbpwd)
+                    if (Coder.GetHash(tbreset0.Text) != dbhsh)
                         throw new Exception("Old password is incorrect");
                 }
 
@@ -112,10 +113,10 @@ namespace Bayview_Demo
                 using (SQLiteConnection dbcon = new SQLiteConnection())
                 {
                     dbcon.ConnectionString = dbConnection.source;
-                    sql = "UPDATE staff SET passwd=@pw WHERE staffID=@id";
+                    sql = "UPDATE staff SET passwd=@hsh WHERE staffID=@id";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
                     {
-                        cmd.Parameters.AddWithValue("pw", tbreset1.Text);
+                        cmd.Parameters.AddWithValue("hsh", Coder.GetHash(tbreset1.Text));
                         cmd.Parameters.AddWithValue("id", stfid);
                         dbcon.Open();
                             cmd.ExecuteNonQuery();
@@ -198,5 +199,10 @@ namespace Bayview_Demo
             timer1.Stop();
         }
 
+        private void btncust_Click_1(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            frm2.ShowDialog();
+        }
     }
 }

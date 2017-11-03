@@ -8,6 +8,6 @@
 
         //home
         public static string
-           source = @"Data Source=C:\Users\mitch\Dropbox\%work - teaching\#IS2S566_TeamApplicationProject\Bayview.db";
+           source = @"Data Source=C:\Users\mitch\Dropbox\%work - teaching\#IS2S566_TeamApplicationProject\Bayview-e.db";
     }
 }
