@@ -173,6 +173,7 @@
             this.tbusername.Name = "tbusername";
             this.tbusername.Size = new System.Drawing.Size(312, 34);
             this.tbusername.TabIndex = 0;
+            this.tbusername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbusername_KeyPress);
             // 
             // label1
             // 

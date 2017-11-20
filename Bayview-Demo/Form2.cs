@@ -6,12 +6,13 @@ namespace Bayview_Demo
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        public Form2(string inString)
         {
             InitializeComponent();
+            conString = inString;
         }
 
-        string conString = dbConnection.source;
+        string conString;
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -106,7 +107,8 @@ namespace Bayview_Demo
             timer1.Interval = time;
             timer1.Start();
         }
-        //turn off feedback label after3 seconds
+
+        //turn off feedback label after n seconds
         private void timer1_Tick(object sender, EventArgs e)
         {
             lbFeedback.Visible = false;

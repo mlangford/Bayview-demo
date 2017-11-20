@@ -15,12 +15,12 @@ namespace Bayview_Demo
         //global variable used to keep track of
         //the currently logged-in staff member
         int stfid;
-        //global variable to hold db path/filename 
+        //global variable to hold the db path/filename 
         string db;
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //try to get db details from LKG file
+            //try to get db connection details from LKG file
             try
             {
                 using (StreamReader sr = new StreamReader("lkg.txt"))
@@ -60,7 +60,7 @@ namespace Bayview_Demo
                 File.Delete("lkg.txt");
                 Environment.Exit(0);
             }
-            //final test, try to read room table
+            //final test, try to read from table
             try
             {
                 using (SQLiteConnection dbcon = new SQLiteConnection())
@@ -101,7 +101,7 @@ namespace Bayview_Demo
             {
                 using (SQLiteConnection dbcon = new SQLiteConnection())
                 {
-                    dbcon.ConnectionString = dbConnection.source;
+                    dbcon.ConnectionString = @"Data Source=" + db;
                     //we wish to retrieve the password and staff-ID
                     string sql = "SELECT passwd, staffID FROM staff WHERE staffname=@name";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
@@ -171,7 +171,7 @@ namespace Bayview_Demo
                 string dbhsh;
                 using (SQLiteConnection dbcon = new SQLiteConnection())
                 {
-                    dbcon.ConnectionString = dbConnection.source;
+                    dbcon.ConnectionString = @"Data Source=" + db;
                     sql = "SELECT passwd FROM staff WHERE staffID=@id";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
                     {
@@ -192,7 +192,7 @@ namespace Bayview_Demo
                 //write the newly supplied password out to the db
                 using (SQLiteConnection dbcon = new SQLiteConnection())
                 {
-                    dbcon.ConnectionString = dbConnection.source;
+                    dbcon.ConnectionString = @"Data Source=" + db;
                     sql = "UPDATE staff SET passwd=@hsh WHERE staffID=@id";
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
                     {
@@ -251,16 +251,25 @@ namespace Bayview_Demo
         private void btncust_Click(object sender, EventArgs e)
         {
             //Display Form 2 when the "Customers" button is clicked
-            Form2 frm2 = new Form2();
+            Form2 frm2 = new Form2(@"Data Source=" + db);
             frm2.ShowDialog();
         }
 
+        //deal with return keys in login boxes
         private void tbpasswd_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
                 e.Handled = true;
                 btnlogin_Click(null, null);
+            }
+        }
+        private void tbusername_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                tbpasswd.Focus();
             }
         }
 
@@ -281,7 +290,7 @@ namespace Bayview_Demo
 
         private void btncust_Click_1(object sender, EventArgs e)
         {
-            Form2 frm2 = new Form2();
+            Form2 frm2 = new Form2(@"Data Source=" + db);
             frm2.ShowDialog();
         }
 
