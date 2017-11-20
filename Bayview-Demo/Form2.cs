@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Data;
 using System.Data.SQLite;
 
 namespace Bayview_Demo
@@ -13,6 +14,9 @@ namespace Bayview_Demo
         }
 
         string conString;
+
+        SQLiteDataAdapter daSearch;
+        DataTable dtSearch = new DataTable();
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -120,5 +124,30 @@ namespace Bayview_Demo
             this.Close();
         }
 
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SQLiteConnection dbcon = new SQLiteConnection(conString))
+                {
+                    string sql = @"Select * From Customer Where "
+                        + "lastname Like @lookfor Order By lastname";
+                    daSearch = new SQLiteDataAdapter(sql, dbcon);
+                    daSearch.SelectCommand.Parameters.AddWithValue("@lookfor", "%" + cbFind.Text + "%");
+                    dtSearch.Clear();
+                    daSearch.Fill(dtSearch);
+
+                    //bind the search result to the Find comboBox
+                    cbFind.DataSource = dtSearch;
+                    cbFind.DisplayMember = "lastname";     //show the names
+                    cbFind.ValueMember = "customerID";  //return the ids
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
     }
 }

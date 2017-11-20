@@ -54,6 +54,7 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.cbFind = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lbFeedback
@@ -96,6 +97,7 @@
             this.btnFind.TabIndex = 52;
             this.btnFind.Text = "Find\r\nCustomer";
             this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // btnCancel
             // 
@@ -288,12 +290,21 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // cbFind
+            // 
+            this.cbFind.FormattingEnabled = true;
+            this.cbFind.Location = new System.Drawing.Point(459, 60);
+            this.cbFind.Name = "cbFind";
+            this.cbFind.Size = new System.Drawing.Size(261, 24);
+            this.cbFind.TabIndex = 56;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MistyRose;
             this.ClientSize = new System.Drawing.Size(876, 477);
+            this.Controls.Add(this.cbFind);
             this.Controls.Add(this.lbFeedback);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnBook);
@@ -357,5 +368,6 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ComboBox cbFind;
     }
 }
