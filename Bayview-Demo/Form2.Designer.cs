@@ -275,6 +275,7 @@
             this.btnEdit.TabIndex = 33;
             this.btnEdit.Text = "Edit Details";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnAdd
             // 
@@ -298,6 +299,7 @@
             this.cbFind.Size = new System.Drawing.Size(261, 24);
             this.cbFind.TabIndex = 56;
             this.cbFind.SelectedIndexChanged += new System.EventHandler(this.cbFind_SelectedIndexChanged);
+            this.cbFind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFind_KeyPress);
             // 
             // Form2
             // 

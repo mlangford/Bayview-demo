@@ -39,7 +39,16 @@ namespace Bayview_Demo
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            setinputs(false);
+            //reset the UI
+            btnFind.Enabled = true;       //can now use Find
+            cbFind.Enabled = true;        //
+            btnBook.Enabled = false;     //cannot use Book
+            btnEdit.Enabled = false;      //cannot use Edit
+            btnAdd.Enabled = true;       //can use Add
+
+            dtSearch.Clear();                //clear any previous search result
+            clrinputs();                          //clear any current field contents
+            setinputs(false);                 //deactivate the customer fields
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -47,10 +56,21 @@ namespace Bayview_Demo
             try
             {
                 //write new customer data to db
-                using (SQLiteConnection dbcon = new SQLiteConnection())
+                using (SQLiteConnection dbcon = new SQLiteConnection(conString))
                 {
-                    dbcon.ConnectionString = conString;
-                    string sql = "Insert Into customer(title,firstname,lastname,address1,address2,address3,postcode,phone) Values(@t,@f,@l,@a1,@a2,@a3,@pc,@pn)";
+                    string sql;
+                    if (btnEdit.Enabled)
+                    {
+                        //this is an "edit" submit
+                        sql = "Update customer Set title=@t, firstname=@f, lastname=@l,"
+                             + " address1=@a1, address2=@a2, address3=@a3, postcode=@pc, phone=@pn"
+                             + " Where customerID=@cid";
+                    }
+                    else
+                    {
+                        sql = "Insert Into customer(title,firstname,lastname,address1,address2,address3,postcode,phone)"
+                            + " Values(@t,@f,@l,@a1,@a2,@a3,@pc,@pn)";
+                    }
                     using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
                     {
                         cmd.Parameters.AddWithValue("t", cbTitle.Text);
@@ -61,24 +81,37 @@ namespace Bayview_Demo
                         cmd.Parameters.AddWithValue("a3", tbA3.Text);
                         cmd.Parameters.AddWithValue("pc", tbPC.Text);
                         cmd.Parameters.AddWithValue("pn", tbPhone.Text);
+                        if (btnEdit.Enabled)
+                            cmd.Parameters.AddWithValue("cid", cbFind.SelectedValue);
+                        //perform db operation
                         dbcon.Open();
                         cmd.ExecuteNonQuery();
                         dbcon.Close();
                     }
                 }
-                showlabel("New Customer Added OK", 4000);
-                setinputs(false);
+                //display relevant action feedback message
+                if (btnEdit.Enabled)
+                {
+                    showlabel("Customer Details Updated", 4000);
+                    dtSearch.Clear();     //now clear any previous search result
+                }
+                else
+                {
+                    showlabel("New Customer Added OK", 4000);
+                }
+                //reset the UI by using the 'Cancel' button
+                btnCancel_Click(null, null);
             }
             catch (Exception ex)
             {
+                btnCancel_Click(null, null);
                 showlabel(ex.Message, 4000);
-                setinputs(false);
             }
         }
 
         private void setinputs(Boolean setas)
         {
-            clrinputs();
+            //enable or disable the customer data fields
             cbTitle.Enabled = setas;
             tbFN.Enabled = setas;
             tbLN.Enabled = setas;
@@ -180,6 +213,28 @@ namespace Bayview_Demo
                 tbPC.Text = dtSearch.Rows[cbFind.SelectedIndex][7].ToString();
                 tbPhone.Text = dtSearch.Rows[cbFind.SelectedIndex][8].ToString();
             }
+        }
+
+        private void cbFind_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //allows Find comboBox to react to Return key
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                btnFind_Click(null, null);
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            //set UI controls for Edit current customer
+            btnFind.Enabled = false;       //cannot use the Find function
+            cbFind.Enabled = false;        //
+            cbFind.Text = "";                 //
+            btnBook.Enabled = false;      //cannot use Book
+            btnAdd.Enabled = false;       //cannot use Add
+
+            setinputs(true);                    //activate the customer fields
         }
     }
 }
