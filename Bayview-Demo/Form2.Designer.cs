@@ -297,6 +297,7 @@
             this.cbFind.Name = "cbFind";
             this.cbFind.Size = new System.Drawing.Size(261, 24);
             this.cbFind.TabIndex = 56;
+            this.cbFind.SelectedIndexChanged += new System.EventHandler(this.cbFind_SelectedIndexChanged);
             // 
             // Form2
             // 

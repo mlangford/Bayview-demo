@@ -142,11 +142,43 @@ namespace Bayview_Demo
                     cbFind.DisplayMember = "lastname";     //show the names
                     cbFind.ValueMember = "customerID";  //return the ids
 
+                    //any customer details found?
+                    if (cbFind.Items.Count > 0)
+                    {
+                        //yes - display 1st record and enabled Book and Edit buttons
+                        cbFind.SelectedIndex = 0;
+                        cbFind_SelectedIndexChanged(null, null);
+                        btnBook.Enabled = true;
+                        btnEdit.Enabled = true;
+                    }
+                    else
+                    {
+                        //no - reset the UI using the cancel button
+                        cbFind.SelectedIndex = -1;
+                        btnCancel_Click(null, null);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void cbFind_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //make sure there is a customer record to show
+            if (cbFind.SelectedIndex >= 0)
+            {
+                //populate customer fields with selected record details
+                cbTitle.Text = dtSearch.Rows[cbFind.SelectedIndex][1].ToString();
+                tbFN.Text = dtSearch.Rows[cbFind.SelectedIndex][2].ToString();
+                tbLN.Text = dtSearch.Rows[cbFind.SelectedIndex][3].ToString();
+                tbA1.Text = dtSearch.Rows[cbFind.SelectedIndex][4].ToString();
+                tbA2.Text = dtSearch.Rows[cbFind.SelectedIndex][5].ToString();
+                tbA3.Text = dtSearch.Rows[cbFind.SelectedIndex][6].ToString();
+                tbPC.Text = dtSearch.Rows[cbFind.SelectedIndex][7].ToString();
+                tbPhone.Text = dtSearch.Rows[cbFind.SelectedIndex][8].ToString();
             }
         }
     }
