@@ -99,6 +99,61 @@ namespace Bayview_Demo
             panel2.Enabled = false;
         }
 
+        private void cbType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbRooms.Items.Clear();
+            try
+            {
+                //create list of all rooms of selected type
+                using (SQLiteConnection dbcon = new SQLiteConnection(conString))
+                {
+                    string sql1 = @"Select number From room Where type = @rmtyp And disabled = @da";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql1, dbcon))
+                    {
+                        cmd.Parameters.AddWithValue("@rmtyp", cbType.Text);
+                        if (cbDisabled.Checked)
+                        {
+                            cmd.Parameters.AddWithValue("@da", 1);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@da", 0);
+                        }
+                        dbcon.Open();
+                        using (SQLiteDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                lbRooms.Items.Add(dr[0].ToString());
+                            }
+                        }
+                        dbcon.Close();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                showlabel("Error: " + ex.Message, 4000);
+            }
+        }
+
+        //display a feedback label
+        private void showlabel(string detail, int time)
+        {
+            lbFeedback.Text = detail;
+            lbFeedback.Visible = true;
+            timer1.Interval = time;
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lbFeedback.Visible = false;
+            timer1.Stop();
+        }
+
+
         private void btnQuit_Click(object sender, EventArgs e)
         {
             this.Close();

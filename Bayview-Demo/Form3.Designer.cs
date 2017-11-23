@@ -216,6 +216,7 @@
             this.cbType.Name = "cbType";
             this.cbType.Size = new System.Drawing.Size(140, 33);
             this.cbType.TabIndex = 40;
+            this.cbType.SelectedIndexChanged += new System.EventHandler(this.cbType_SelectedIndexChanged);
             // 
             // cbDisabled
             // 
@@ -373,6 +374,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lbFeedback);
             this.Name = "Form3";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Form3";
             this.Load += new System.EventHandler(this.Form3_Load);
             this.panel2.ResumeLayout(false);
