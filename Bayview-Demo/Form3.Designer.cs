@@ -179,6 +179,7 @@
             this.btnRmCancel.TabIndex = 44;
             this.btnRmCancel.Text = "<- RETURN";
             this.btnRmCancel.UseVisualStyleBackColor = true;
+            this.btnRmCancel.Click += new System.EventHandler(this.btnRmCancel_Click);
             // 
             // lbRooms
             // 
@@ -269,6 +270,7 @@
             this.btnRmPick.TabIndex = 43;
             this.btnRmPick.Text = "NEXT ->";
             this.btnRmPick.UseVisualStyleBackColor = true;
+            this.btnRmPick.Click += new System.EventHandler(this.btnRmPick_Click);
             // 
             // panel1
             // 

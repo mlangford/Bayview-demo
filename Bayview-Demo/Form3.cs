@@ -64,6 +64,41 @@ namespace Bayview_Demo
             nights();
         }
 
+        private void btnRmPick_Click(object sender, EventArgs e)
+        {
+            //reset UI appropriately
+            cbAdult.Enabled = false;        //prevent use
+            cbChild.Enabled = false;
+            panel1.Enabled = false;         //switch panels to
+            panel2.Enabled = true;          //activate new controls
+
+            //set up room types according to business rules
+            cbType.Items.Clear();
+            partySize = Convert.ToInt32(cbAdult.Text) + Convert.ToInt32(cbChild.Text);
+            if (partySize > 2)
+                cbType.Items.Add("Family");
+            if (partySize <= 2)
+                cbType.Items.Insert(0, "Double");
+            if (partySize == 1)
+                cbType.Items.Insert(0, "Single");
+            cbType.SelectedIndex = 0;
+        }
+
+        private void btnRmCancel_Click(object sender, EventArgs e)
+        {
+            //reset UI accordingly
+            btnCost.Enabled = false;
+            lblCost.Visible = false;
+            lbRooms.Items.Clear();      //empty rooms list
+            cbType.Items.Clear();       //empty room type list
+            cbType.Text = "";
+            cbBreakfast.Checked = false;
+            cbAdult.Enabled = true;
+            cbChild.Enabled = true;
+            panel1.Enabled = true;
+            panel2.Enabled = false;
+        }
+
         private void btnQuit_Click(object sender, EventArgs e)
         {
             this.Close();
