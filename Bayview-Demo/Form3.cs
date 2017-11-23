@@ -229,7 +229,53 @@ namespace Bayview_Demo
 
         private void btnBook_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                //write booking details into db
+                using (SQLiteConnection dbcon = new SQLiteConnection())
+                {
+                    dbcon.ConnectionString = conString;
+                    string sql = "Insert Into booking(staffID, customerID,roomID,party,startdate,enddate,brkfst,charge)"
+                             + " Values(@s,@c,@r,@p,@sd,@ed,@bk,@ch)";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
+                    {
+                        //fill required parameter values
+                        cmd.Parameters.AddWithValue("s", "2");
+                        cmd.Parameters.AddWithValue("c", custid.ToString());
+                        cmd.Parameters.AddWithValue("r", lbRooms.Text);
+                        cmd.Parameters.AddWithValue("p", partySize);
+                        cmd.Parameters.AddWithValue("sd", d1);
+                        cmd.Parameters.AddWithValue("ed", d2);
+                        if (cbBreakfast.Checked)
+                        {
+                            cmd.Parameters.AddWithValue("bk", 1);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("bk", 0);
+                        }
+                        cmd.Parameters.AddWithValue("ch", lblCost.Text.Substring(1));
+                        //perform db operation
+                        dbcon.Open();
+                        cmd.ExecuteNonQuery();
+                        dbcon.Close();
+                    }
+                }
+                //reset and tidy up the UI
+                showlabel("Booking Added to System OK", 6500);
+                btnRmCancel_Click(null, null);
+                btnBook.Enabled = false;
+                panel1.Enabled = false;
+                cbAdult.Text = "";
+                cbAdult.Enabled = false;
+                cbChild.Text = "";
+                cbChild.Enabled = false;
+                tbLN.Clear();
+            }
+            catch (Exception ex)
+            {
+                showlabel(ex.Message, 8000);
+            }
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
