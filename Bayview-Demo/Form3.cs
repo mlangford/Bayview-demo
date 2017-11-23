@@ -130,6 +130,25 @@ namespace Bayview_Demo
                         dbcon.Close();
                     }
 
+                    //now find room bookings that overlap the selected dates
+                    d1 = dtIn.Value.ToString("yyyy-MM-dd");
+                    d2 = dtOut.Value.ToString("yyyy-MM-dd");
+                    string sql2 = @"Select roomID From booking Where @d2 >= startdate And enddate >= @d1";
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql2, dbcon))
+                    {
+                        cmd.Parameters.AddWithValue("@d2", d2);
+                        cmd.Parameters.AddWithValue("@d1", d1);
+                        dbcon.Open();
+                        using (SQLiteDataReader dr = cmd.ExecuteReader())
+                        {
+                            //remove all rooms that overlap
+                            while (dr.Read())
+                            {
+                                lbRooms.Items.Remove(dr[0].ToString());
+                            }
+                        }
+                        dbcon.Close();
+                    }
                 }
             }
             catch (Exception ex)
@@ -153,6 +172,65 @@ namespace Bayview_Demo
             timer1.Stop();
         }
 
+        private void lbRooms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //activate evaluate cost button
+            btnCost.Enabled = true;
+        }
+
+        private void btnCost_Click(object sender, EventArgs e)
+        {
+            string sql;
+            Single charge;
+            try
+            {
+                //calculate booking charge
+                using (SQLiteConnection dbcon = new SQLiteConnection(conString))
+                {
+                    string rate = "";
+                    if (cbBreakfast.Checked && partySize == 1)
+                        rate = "SOBrate";
+                    if (cbBreakfast.Checked && partySize > 1)
+                        rate = "MOBrate";
+                    if (!cbBreakfast.Checked && partySize == 1)
+                        rate = "SOrate";
+                    if (!cbBreakfast.Checked && partySize > 1)
+                        rate = "MOrate";
+                    sql = @"Select " + rate + " From tarrif Where roomtype = @rmtyp";
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, dbcon))
+                    {
+                        cmd.Parameters.AddWithValue("@rmtyp", cbType.Text);
+                        dbcon.Open();
+                        using (SQLiteDataReader dr = cmd.ExecuteReader())
+                        {
+                            dr.Read();
+                            charge = Convert.ToSingle(dr[0]) * Convert.ToSingle(nudNights.Value);
+                        }
+                        dbcon.Close();
+                        lblCost.Text = charge.ToString("C");
+                        lblCost.Visible = true;
+                        btnBook.Enabled = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                showlabel("Error: " + ex.Message, 4000);
+            }
+        }
+
+        private void cbBreakfast_CheckedChanged(object sender, EventArgs e)
+        {
+            //if breakfast choice changes, must re-evaluate price
+            lblCost.Visible = false;
+            btnBook.Enabled = false;
+        }
+
+        private void btnBook_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void btnQuit_Click(object sender, EventArgs e)
         {

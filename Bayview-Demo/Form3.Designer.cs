@@ -82,6 +82,7 @@
             this.btnCost.TabIndex = 62;
             this.btnCost.Text = "Evaluate\r\nCharge";
             this.btnCost.UseVisualStyleBackColor = true;
+            this.btnCost.Click += new System.EventHandler(this.btnCost_Click);
             // 
             // label8
             // 
@@ -122,6 +123,7 @@
             this.btnBook.TabIndex = 58;
             this.btnBook.Text = "Confirm\r\nBooking";
             this.btnBook.UseVisualStyleBackColor = true;
+            this.btnBook.Click += new System.EventHandler(this.btnBook_Click);
             // 
             // label4
             // 
@@ -169,6 +171,7 @@
             this.cbBreakfast.TabIndex = 44;
             this.cbBreakfast.Text = "Include\r\nBreakfast";
             this.cbBreakfast.UseVisualStyleBackColor = true;
+            this.cbBreakfast.CheckedChanged += new System.EventHandler(this.cbBreakfast_CheckedChanged);
             // 
             // btnRmCancel
             // 
@@ -189,6 +192,7 @@
             this.lbRooms.Name = "lbRooms";
             this.lbRooms.Size = new System.Drawing.Size(120, 179);
             this.lbRooms.TabIndex = 45;
+            this.lbRooms.SelectedIndexChanged += new System.EventHandler(this.lbRooms_SelectedIndexChanged);
             // 
             // label7
             // 
