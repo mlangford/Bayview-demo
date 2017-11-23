@@ -111,6 +111,7 @@
             this.btnQuit.TabIndex = 59;
             this.btnQuit.Text = "Close";
             this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
             // btnBook
             // 
@@ -257,6 +258,7 @@
             0,
             0,
             0});
+            this.nudNights.ValueChanged += new System.EventHandler(this.nudNights_ValueChanged);
             // 
             // btnRmPick
             // 
@@ -309,6 +311,7 @@
             this.dtOut.Name = "dtOut";
             this.dtOut.Size = new System.Drawing.Size(200, 30);
             this.dtOut.TabIndex = 37;
+            this.dtOut.ValueChanged += new System.EventHandler(this.dtOut_ValueChanged);
             // 
             // dtIn
             // 
@@ -316,6 +319,7 @@
             this.dtIn.Name = "dtIn";
             this.dtIn.Size = new System.Drawing.Size(200, 30);
             this.dtIn.TabIndex = 35;
+            this.dtIn.ValueChanged += new System.EventHandler(this.dtIn_ValueChanged);
             // 
             // tbLN
             // 
