@@ -236,5 +236,13 @@ namespace Bayview_Demo
 
             setinputs(true);                    //activate the customer fields
         }
+
+        private void btnBook_Click(object sender, EventArgs e)
+        {
+            //pass the selected customer id and an assembled name across to the 'place a booking' form
+            Form3 frm3 = new Form3(conString, Convert.ToInt32(cbFind.SelectedValue),
+                                                       tbLN.Text + ", " + tbFN.Text + " " + cbTitle.Text);
+            frm3.ShowDialog();
+        }
     }
 }

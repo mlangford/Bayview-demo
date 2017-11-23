@@ -88,6 +88,7 @@
             this.btnBook.TabIndex = 53;
             this.btnBook.Text = "Place Booking";
             this.btnBook.UseVisualStyleBackColor = true;
+            this.btnBook.Click += new System.EventHandler(this.btnBook_Click);
             // 
             // btnFind
             // 
